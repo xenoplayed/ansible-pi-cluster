@@ -1,0 +1,27 @@
+---
+- name: generate pw playground
+  hosts: all
+  vars:
+    default_pw: "mypa$$"
+  vars_prompt:
+    - name: password
+      prompt: Choose a password
+      default: "{{ default_pw }}"
+      private: no
+
+  tasks:
+    - name: set password to default, when not set
+      ansible.builtin.debug:
+        msg: "No password given. Password set to default: {{ default_pw }}"
+      when: "{{ password == default_pw }}"
+
+    - name: 
+      ansible.builtin.debug:
+        msg: "still default password"
+      when: "{{ password == default_pw }}"
+        # msg: "hello-{{ lookup('password', '/dev/null chars=ascii_lowercase,digits length=8') }}"
+
+    - name: create variable if not exists
+      ansible.builtin.debug:
+        msg: "hello-{{ password | default('default') | password_hash('sha512') }}"
+        # msg: "hello-{{ lookup('password', '/dev/null chars=ascii_lowercase,digits length=8') }}"

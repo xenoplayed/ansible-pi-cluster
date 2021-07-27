@@ -1,0 +1,8 @@
+---
+- name: variable playground
+  hosts: all
+  vars_files:
+    - ./external_vars.yaml
+  tasks:
+    - ansible.builtin.debug:
+        msg: "hey {{ password }}"

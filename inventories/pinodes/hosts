@@ -1,0 +1,14 @@
+[lowmem_pinodes]
+pi-node03
+
+[highmem_pinodes]
+pi-node01
+pi-node02
+
+[pinodes:children]
+lowmem_pinodes
+highmem_pinodes
+
+[pinodes:vars]
+# /usr/bin/python is used on managed nodes for backward compability
+ansible_python_interpreter=/usr/bin/python3

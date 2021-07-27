@@ -1,0 +1,51 @@
+---
+- name: User management
+  hosts: all
+  become: yes
+
+  # vars: 
+  #   default_user: "xeno"
+  #   default_pw: "password123"
+
+  # vars_prompt:
+  #   - name: username
+  #     prompt: Choose a username
+  #     default: "{{ default_user }}"
+  #     private: no
+
+  #   - name: password
+  #     prompt: Choose a password
+  #     default: "{{ default_pw }}"
+  #     # private: no
+
+  tasks:
+    # - name: set user to default, when not set
+    #   ansible.builtin.debug:
+    #     msg: "No username given. Username set to default: {{ default_user }}"
+    #   when: "{{ username == default_user }}"
+
+    # - name: set password to default, when not set
+    #   ansible.builtin.debug:
+    #     msg: "No password given. Password set to default: {{ default_pw }}"
+    #   when: "{{ password == default_pw }}"
+
+    - name: Add user groups
+      ansible.builtin.group:
+        name: "{{ username }}"
+        state: present
+
+    - name: "add users"
+      ansible.builtin.user:
+        name: "{{ username }}"
+        group: "{{ username }}"
+        groups: sudo
+        shell: /bin/bash
+        password: "{{ password | password_hash('sha512') }}"
+        force: yes
+        update_password: on_create
+        state: present
+
+
+
+
+

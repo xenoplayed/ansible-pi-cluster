@@ -1,0 +1,14 @@
+---
+- name: loop test
+  hosts: all
+  tasks:
+    - name: simple output
+      ansible.builtin.debug:
+        msg: "hey na {{ item }}" 
+        # msg: 
+        #   - "hey ho {{ item }}"
+        #   - "my shell: {{ lookup('env', 'SHELL') }}"
+      loop: "{{ users }}"
+
+  vars:
+    users: [anotheruser1, anotheruser2]

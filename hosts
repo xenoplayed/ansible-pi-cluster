@@ -1,0 +1,14 @@
+[vboxes:children]
+one_node
+two_nodes
+
+[one_node]
+vbox-node151
+
+[two_nodes]
+vbox-node152
+vbox-node153
+
+[vboxes:vars]
+# /usr/bin/python is used on managed nodes for backward compability
+ansible_python_interpreter=/usr/bin/python3

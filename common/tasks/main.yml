@@ -1,0 +1,45 @@
+---
+- name: Upgrade all packages to the latest version
+  apt:
+    name: "*"
+    state: latest
+
+- name: Update all packages to the latest version
+  apt:
+    upgrade: dist
+
+- name: Install Packages
+  apt:
+    pkg:
+      - mc
+      - zsh
+      - git
+      - ntp
+      - build-essential
+      - curl
+      - nmap
+      - python3-pip
+    state: absent
+    
+- name: Remove useless packages from the cache
+  apt:
+    autoclean: yes
+    autoremove: yes
+
+- name: add group
+  ansible.builtin.group:
+    name: "{{ username }}"
+    state: present
+
+
+- name: add user
+  ansible.builtin.user:
+    name: "{{ username }}"
+    group: "{{ username }}"
+    groups: sudo
+    shell: /bin/bash
+    password: "{{ password | password_hash('sha512') }}"
+    force: yes
+    update_password: on_create
+    state: present
+

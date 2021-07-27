@@ -1,0 +1,13 @@
+---
+- name: dict playground
+  hosts: all
+  
+  vars:
+    mydict:
+      - { first: "a", second: "b", third: "c "}
+      - { first: "d", second: "e" }
+  
+  tasks:
+    - ansible.builtin.debug:
+        msg: "{{ item.third }}"
+      loop: "{{ mydict }}"
